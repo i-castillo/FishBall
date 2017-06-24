@@ -6,6 +6,7 @@ void initBall(struct Ball * b){
   b->x = SCREEN_WIDTH / HALF;
   b->y = SCREEN_HEIGHT / HALF;
   b->speed = 0;
+  b->alive = 0;
 
 };
 

@@ -7,6 +7,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "entities.h"
 #include "play.h"
 
