@@ -41,7 +41,8 @@ int loop(struct al_pointers * al_p){
           break;
         case ALLEGRO_KEY_SPACE:
           if(hitBall(&player, &ball)){
-            loadBase(bases, runners, &hit, 1); 
+            loadBase(bases, runners, hit, 1); 
+            hit++;
           }
 
           break;
@@ -51,6 +52,9 @@ int loop(struct al_pointers * al_p){
     
     if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
       switch(ev.keyboard.keycode){
+        case ALLEGRO_KEY_K:
+              printBases(bases);
+              break;
 
         case ALLEGRO_KEY_SPACE:
               resetPlayer(&player);
@@ -68,6 +72,7 @@ int loop(struct al_pointers * al_p){
       drawBall(&ball);
       drawPlayer(&player);
       drawRunners(runners);
+      drawField(bases);
 	  	al_flip_display();
   		al_clear_to_color(al_map_rgb(0,0,0));
 

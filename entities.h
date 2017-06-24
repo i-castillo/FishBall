@@ -32,8 +32,8 @@ struct Ball {
 
 struct Runner {
   char ID;
-  int x;
-  int y;
+  double x;
+  double y;
   int speed;
   double angle;
   struct Base * base;
@@ -62,9 +62,13 @@ void initRunners(struct Runner runners[4]);
 void drawRunners(struct Runner runners[4]);
 void moveRunners(struct Runner runners[4]);
 void initBases(struct Base bases[4] );
-void loadBase(struct Base bases[4], struct Runner runners[4], int * runner, int
+void loadBase(struct Base bases[4], struct Runner runners[4], int runner, int
     numBases);
 
 void gotoBase(struct Runner * r, struct Base * base);
 void calcLine(struct Runner * r, int bx, int by, int rx, int ry);
+
+/* debug */
+void drawField(struct Base bases[4]);
+void printBases(struct Base bases[4]);
 #endif

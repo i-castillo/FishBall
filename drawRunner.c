@@ -6,7 +6,7 @@ void initRunners(struct Runner r[4]){
   for(i = 0; i < 4; i++){
     r[i].ID = i;
     r[i].x = SCREEN_WIDTH / HALF;
-    r[i].y = SCREEN_HEIGHT * 0.75;
+    r[i].y = SCREEN_HEIGHT * 0.90;
     r[i].speed = 5;
     r[i].alive = 0;
     r[i].base = NULL;
@@ -18,10 +18,15 @@ void moveRunners(struct Runner r[4]){
   int i;
   for(int i = 0; i < 4; i++){
     if(r[i].alive == 1){
-    if(r[i].x != (*r[i].base).x){
+    if(fabs(r[i].x - (*r[i].base).x) > 2){
       
         r[i].x += r[i].speed * cos(r[i].angle);
         r[i].y += r[i].speed * sin(r[i].angle);
+
+    }
+    else{
+      r[i].x = (*r[i].base).x;
+      r[i].y = (*r[i].base).y;
 
     }
     
