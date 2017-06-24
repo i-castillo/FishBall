@@ -6,8 +6,13 @@
 #define PLAYER 0
 #define BALL 1
 #define HALF 2
-#define HEALTH 200
-#define BOUND 25
+#define QUARTER 4
+#define THREE_QUARTER 0.75
+#define ONE_TWENTIETH 0.05
+#define INIT_PLAYER_X SCREEN_WIDTH / HALF
+#define INIT_PLAYER_Y SCREEN_HEIGHT * THREE_QUARTER
+#define PLAYER_LENGTH SCREEN_WIDTH / QUARTER + ONE_TWENTIETH * SCREEN_WIDTH
+
 struct Player {
 
   int ID; 
@@ -16,8 +21,10 @@ struct Player {
   int health;
   int boundY;
   int boundX;
+  int speed;
   int alive;
   int length;
+
 
 };
 
@@ -51,14 +58,16 @@ struct Base {
 
 
 
-int calculateBound(struct Player * p);
+void calculateBound(struct Player * p);
 void initPlayer(struct Player * p);
 void drawPlayer(struct Player * p);
+void movePlayer(struct Player * p);
 void resetPlayer(struct Player * p);
+void setSpeed(struct Player * p, int speed);
 void initBall(struct Ball * b);
 void drawBall(struct Ball * b);
-void throwBall(struct Ball * b, struct Player * p);
-void moveBall(struct Ball * b, struct Player * p);
+void throwBall(struct Ball * b);
+void moveBall(struct Ball * b);
 int hitBall(struct Player * p, struct Ball * b);
 void initRunners(struct Runner runners[4]);
 void drawRunners(struct Runner runners[4]);
