@@ -40,6 +40,7 @@ int loop(struct al_pointers * al_p){
           throwBall(&ball, &player);
           break;
         case ALLEGRO_KEY_SPACE:
+          
           if(hitBall(&player, &ball)){
             loadBase(bases, runners, hit, 1); 
             hit++;
@@ -69,6 +70,7 @@ int loop(struct al_pointers * al_p){
 
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
+    //  printDistance(al_p);
       drawBall(&ball);
       drawPlayer(&player);
       drawRunners(runners);

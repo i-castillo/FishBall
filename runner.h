@@ -11,7 +11,7 @@
 #include "entities.h"
 #include "play.h"
 
-#define SCREEN_WIDTH 480
+#define SCREEN_WIDTH 500
 #define SCREEN_HEIGHT 800
 #define FPS 60
 
@@ -24,4 +24,6 @@ struct al_pointers {
 int loop(struct al_pointers * al_p);
 int init_game( struct al_pointers * al_p, int width, int height);
 int destroy_allegro(struct al_pointers * al_p);
+void printDistance(struct al_pointers * al_p);
+
 #endif

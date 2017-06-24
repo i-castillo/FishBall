@@ -7,7 +7,7 @@
 #define BALL 1
 #define HALF 2
 #define HEALTH 200
-#define BOUND 10
+#define BOUND 25
 struct Player {
 
   int ID; 
@@ -17,6 +17,7 @@ struct Player {
   int boundY;
   int boundX;
   int alive;
+  int length;
 
 };
 
@@ -25,8 +26,9 @@ struct Ball {
   int x;
   int y;
   int speed;
+  double angle;
   int alive;
-  
+  int color;
 
 };
 
@@ -49,7 +51,7 @@ struct Base {
 
 
 
-
+int calculateBound(struct Player * p);
 void initPlayer(struct Player * p);
 void drawPlayer(struct Player * p);
 void resetPlayer(struct Player * p);
@@ -71,4 +73,5 @@ void calcLine(struct Runner * r, int bx, int by, int rx, int ry);
 /* debug */
 void drawField(struct Base bases[4]);
 void printBases(struct Base bases[4]);
+
 #endif
