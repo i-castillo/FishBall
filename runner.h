@@ -8,6 +8,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <stdlib.h>
 #include "entities.h"
+#include "play.h"
 
 #define SCREEN_WIDTH 480
 #define SCREEN_HEIGHT 800

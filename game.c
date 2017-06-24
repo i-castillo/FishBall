@@ -3,8 +3,6 @@
 
 int init_game( struct al_pointers * al_p, int width, int height){
 
-  
-
 	if(!al_init())									
 		return 0;
 
