@@ -10,6 +10,7 @@ void throwBall(struct Ball * b){
     b->alive = 1; //ball can be hit
     b->speed = 3;
     b->angle = acos(0);
+    b->hit = 0;
 
   }
 
@@ -17,7 +18,18 @@ void throwBall(struct Ball * b){
 
 int hitBall(struct Player * p, struct Ball * b){ 
 
-  
+  if(b->y > p->y && b->alive == 1 && b->hit == 0){
+    b->hit = 1;
+    int d = p->y - INIT_PLAYER_Y;
+
+    double angle = atan2(d, OFFSET_LENGTH) + acos(0);
+    b->angle = angle;
+    b->speed = -5;
+    (p->score)++;
+
+
+    return 1;
+  }
   return 0;
 }
 

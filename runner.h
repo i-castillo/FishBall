@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "entities.h"
 #include "play.h"
+#include <math.h>
 
 #define SCREEN_WIDTH 500
 #define SCREEN_HEIGHT 800
@@ -25,5 +26,5 @@ int loop(struct al_pointers * al_p);
 int init_game( struct al_pointers * al_p, int width, int height);
 int destroy_allegro(struct al_pointers * al_p);
 void printDistance(struct al_pointers * al_p);
-
+void drawScore(struct al_pointers * al_p, int score);
 #endif

@@ -8,6 +8,7 @@ void initPlayer(struct Player * p){
   p->alive = 0;
   p->length = PLAYER_LENGTH;
   p->speed = 0;
+  p->score = 0;
   calculateBound(p);
 
 }

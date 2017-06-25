@@ -22,8 +22,6 @@ int loop(struct al_pointers * al_p){
   int hit = 1;
   while(!done)
   {
-    //draw entities
-
 
     //move entities
     moveBall(&ball);
@@ -56,8 +54,7 @@ int loop(struct al_pointers * al_p){
           break;
       }
 
-
-    };
+    }
 
 
     if(hitBall(&player, &ball)){
@@ -69,6 +66,7 @@ int loop(struct al_pointers * al_p){
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
       //  printDistance(al_p);
+      drawScore(al_p, player.score);
       drawBall(&ball);
       drawPlayer(&player);
       drawRunners(runners);

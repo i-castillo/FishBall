@@ -11,7 +11,8 @@
 #define ONE_TWENTIETH 0.05
 #define INIT_PLAYER_X SCREEN_WIDTH / HALF
 #define INIT_PLAYER_Y SCREEN_HEIGHT * THREE_QUARTER
-#define PLAYER_LENGTH SCREEN_WIDTH / QUARTER + ONE_TWENTIETH * SCREEN_WIDTH
+#define OFFSET_LENGTH SCREEN_WIDTH / QUARTER
+#define PLAYER_LENGTH OFFSET_LENGTH + ONE_TWENTIETH * SCREEN_WIDTH
 
 struct Player {
 
@@ -24,6 +25,7 @@ struct Player {
   int speed;
   int alive;
   int length;
+  int score;
 
 
 };
@@ -35,6 +37,7 @@ struct Ball {
   int speed;
   double angle;
   int alive;
+  int hit;
   int color;
 
 };
