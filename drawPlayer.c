@@ -15,9 +15,12 @@ void initPlayer(struct Player * p){
 
 void movePlayer(struct Player * p){
   p->y += p->speed;
-  if(p->y < INIT_PLAYER_Y - p->boundY || p->y > INIT_PLAYER_Y + p->boundY){
+  if(p->y < INIT_PLAYER_Y - p->boundY){
     p->speed = 0;
     p->y = INIT_PLAYER_Y;
+  }
+  else if(p->y > INIT_PLAYER_Y + p->boundY){
+    p->y = INIT_PLAYER_Y + p->boundY;
   }
 
 }

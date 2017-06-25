@@ -24,8 +24,8 @@ int hitBall(struct Player * p, struct Ball * b){
 
     double angle = atan2(d, OFFSET_LENGTH) + acos(0);
     b->angle = angle;
-    b->speed = -5;
-    (p->score)++;
+    b->speed = -1 * fabs(1 * (p->speed * 3 + 1));
+    (p->score) += p->speed;
 
 
     return 1;
