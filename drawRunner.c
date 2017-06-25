@@ -28,6 +28,11 @@ void moveRunners(struct Runner r[4]){
       r[i].x = (*r[i].base).x;
       r[i].y = (*r[i].base).y;
 
+      if(r[i].basestoGo != 0 ){
+        gotoNextBase(&r[i]);
+
+      }
+
     }
     
     }

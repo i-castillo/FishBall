@@ -21,37 +21,32 @@ void initBases(struct Base base[4]){
 
 };
 
-void loadBase (struct Base bases[4], struct Runner runners[4], int runner, int
+void loadBase (struct Base bases[4], struct Runner r[4], int runner, int
     numBases){
 
-    runner %= 4;
-  
-   
-  while(numBases > 0){
-    if(bases[3].personAt != NULL){
-      fprintf(stderr, "%d going to base 0\n", runner);
+  runner %= 4;
+  gotoBase(&r[runner], &bases[0]); 
+  int i;
+  for(i = 0; i < 4; i++){
+    r[i].basestoGo = numBases;
+    gotoNextBase(&r[i]);
 
-      gotoBase(bases[3].personAt, &bases[0]);
-      bases[0].personAt = NULL;
-    }
-    if(bases[2].personAt != NULL){
-      fprintf(stderr, "%d going to base 3\n", runner);
-
-      gotoBase(bases[2].personAt, &bases[3]);
-    }
-
-    if(bases[1].personAt != NULL){
-      fprintf(stderr, "%d going to base 2\n", runner);
-      gotoBase(bases[1].personAt, &bases[2]);
-    }
-    numBases--;
   }
-  gotoBase(&runners[runner], &bases[1]); 
-      fprintf(stderr, "%d going to base 1\n", runner);
 
-
-  
 }
+
+void gotoNextBase(struct Runner * r){
+  (r->basestoGo)--;
+ // if(r->base == 3){
+    gotoBase(r, (r->base)-3);
+  }
+  else{
+
+    gotoBase(r, (r->base)+1);
+  }
+
+
+};
 
 void gotoBase(struct Runner * r, struct Base * base){
   r->alive = 1;

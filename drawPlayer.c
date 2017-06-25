@@ -15,21 +15,23 @@ void initPlayer(struct Player * p){
 
 void movePlayer(struct Player * p){
   p->y += p->speed;
-  if(p->y < INIT_PLAYER_Y - p->boundY){
+  if(p->y < INIT_PLAYER_Y - p->boundY || p->y > INIT_PLAYER_Y + p->boundY){
     p->speed = 0;
-    p->y = p->boundY + INIT_PLAYER_Y;
-  };
+    p->y = INIT_PLAYER_Y;
+  }
 
 }
 
 void setSpeed(struct Player * p, int speed){
-  if(speed == 0){
-    speed = 1;
+  if(p->alive == 1){
+  p->speed = 1 * speed;
+
   }
-
-  p->speed = -1 * speed;
-
 }
+
+void setAlive(struct Player * p, int alive){
+  p->alive = alive;
+};
 
 void calculateBound(struct Player * p){
 

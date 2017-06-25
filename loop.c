@@ -16,13 +16,23 @@ int loop(struct al_pointers * al_p){
   initBases(bases);
 
 
+
+
   int done = 0;
   ALLEGRO_EVENT ev;
   int redraw;
-  int hit = 1;
+  int balls = 16;
+  int power = 0;
+
+  ALLEGRO_TIMER * powerTimer = al_create_timer(0.25);
   while(!done)
   {
-
+    if(balls <= 1){
+      done = 1;
+    }
+    power = al_get_timer_count(powerTimer);
+    setSpeed(&player, power);
+    
     //move entities
     moveBall(&ball);
     movePlayer(&player);
@@ -39,6 +49,11 @@ int loop(struct al_pointers * al_p){
           throwBall(&ball);
           break;
         case ALLEGRO_KEY_SPACE:
+
+          al_stop_timer(powerTimer);
+          al_set_timer_count(powerTimer, 0);
+          setSpeed(&player, -power);
+          setAlive(&player, 0);
           break;
       }
     }      
@@ -51,6 +66,10 @@ int loop(struct al_pointers * al_p){
           break;
 
         case ALLEGRO_KEY_SPACE:
+          al_start_timer(powerTimer);
+          setAlive(&player, 1);
+
+
           break;
       }
 
@@ -58,14 +77,16 @@ int loop(struct al_pointers * al_p){
 
 
     if(hitBall(&player, &ball)){
-      loadBase(bases, runners, hit, 1); 
-      hit++;
+      loadBase(bases, runners, balls, 1); 
+      balls--;
 
     } 
 
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
       //  printDistance(al_p);
+      drawPowerBar(power);
+      drawBalls(balls);
       drawScore(al_p, player.score);
       drawBall(&ball);
       drawPlayer(&player);

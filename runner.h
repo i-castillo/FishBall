@@ -27,4 +27,6 @@ int init_game( struct al_pointers * al_p, int width, int height);
 int destroy_allegro(struct al_pointers * al_p);
 void printDistance(struct al_pointers * al_p);
 void drawScore(struct al_pointers * al_p, int score);
+void drawBalls(int ballsRem);
+void drawPowerBar(int power);
 #endif
