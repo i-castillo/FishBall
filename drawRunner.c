@@ -18,27 +18,29 @@ void moveRunners(struct Runner r[4]){
   int i;
   for(int i = 0; i < 4; i++){
     if(r[i].alive == 1){
-    if(fabs(r[i].x - (*r[i].base).x) > 2){
-      
+      if(fabs(r[i].x - (*r[i].base).x) > 2){
+
         r[i].x += r[i].speed * cos(r[i].angle);
         r[i].y += r[i].speed * sin(r[i].angle);
 
-    }
-    else{
-      r[i].x = (*r[i].base).x;
-      r[i].y = (*r[i].base).y;
+      }
+      else{
+        r[i].x = (*r[i].base).x;
+        r[i].y = (*r[i].base).y;
 
-      if(r[i].basestoGo != 0 ){
-        gotoNextBase(&r[i]);
+        if(r[i].basestoGo != 0 ){
+          
+          gotoNextBase(&r[i]);
+          (r[i].basestoGo)--;
+
+        }
 
       }
 
     }
-    
-    }
   };
 
-  
+
 
 }
 

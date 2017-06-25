@@ -22,6 +22,7 @@ int loop(struct al_pointers * al_p){
   ALLEGRO_EVENT ev;
   int redraw;
   int balls = 16;
+  int hits = 0;
   int power = 0;
 
   ALLEGRO_TIMER * powerTimer = al_create_timer(0.25);
@@ -77,7 +78,8 @@ int loop(struct al_pointers * al_p){
 
 
     if(hitBall(&player, &ball)){
-      loadBase(bases, runners, balls, 1); 
+      loadBase(bases, runners, hits, 2);
+      hits++;
       balls--;
 
     } 

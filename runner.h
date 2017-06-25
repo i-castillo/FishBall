@@ -29,4 +29,5 @@ void printDistance(struct al_pointers * al_p);
 void drawScore(struct al_pointers * al_p, int score);
 void drawBalls(int ballsRem);
 void drawPowerBar(int power);
+void print(char * string);
 #endif

@@ -57,6 +57,8 @@ struct Base {
   int x;
   int y;
   struct Runner * personAt;
+  struct Base * nextbase;
+  
 };
 
 
