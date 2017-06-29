@@ -6,7 +6,7 @@ void throwBall(struct Ball * b){
   if(b->alive == 0){
 
     b->x = SCREEN_WIDTH / HALF;
-    b->y = SCREEN_HEIGHT/ HALF;
+    b->y = SCREEN_HEIGHT * 0.25;
     b->alive = 1; //ball can be hit
     b->speed = 3;
     b->angle = acos(0);
@@ -19,21 +19,45 @@ void throwBall(struct Ball * b){
 int hitBall(struct Player * p, struct Ball * b){ 
 
   if(b->y > p->y && b->alive == 1 && b->hit == 0){
+    
     b->hit = 1;
     int d = p->y - INIT_PLAYER_Y;
-
-    double angle = atan2(d, OFFSET_LENGTH) + acos(0);
+    p->y = b->y;
+    double angle = atan2((double)d, OFFSET_LENGTH) + acos(0);
     b->angle = angle;
-    b->speed = -1 * fabs(1 * (p->speed * 3 + 1));
-    (p->score) += p->speed;
+    b->speed = -1 * sqrt(fabs(p->speed) * fabs(p->power));
+    if(b->speed == 0){
+      b->alive = 0;
+      
+    }
+    p->speed = 0;
 
+    p->score += fabs(b->speed);
+    fprintf(stderr, "%d\n", p->score); 
+    int returnval = fabs(p->power);
 
-    return 1;
+    if(returnval > 25){
+      return 4;
+    }
+    else if(returnval > 16){
+      return 3;
+    }
+    else if(returnval > 4){
+      return 2;
+    }
+    else if(returnval > 1){
+      return 1;
+    }
+    else{
+    return 0;
+    }
   }
   return 0;
 }
 
 void resetPlayer(struct Player * p){
-  p->y = SCREEN_HEIGHT * 0.75 + 50;
+  p->y = INIT_PLAYER_Y;
+  p->speed = 0;
+  p->power = 0;
 
 };

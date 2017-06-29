@@ -2,23 +2,26 @@
 #include "runner.h"
 #include <math.h>
 void initBases(struct Base base[4]){
+
+  int basewidth = sqrt(2) * SCREEN_WIDTH / 2 - 10; 
   base[0].x = SCREEN_WIDTH / HALF;
   base[0].y = SCREEN_HEIGHT * 0.90;
   base[0].personAt = NULL;
   base[0].nextbase = &base[1];
-
-  base[1].x = SCREEN_WIDTH * 0.85;
-  base[1].y = SCREEN_HEIGHT / HALF;
+  
+  
+  base[1].x = base[0].x + basewidth / sqrt(2);
+  base[1].y = base[0].y - basewidth / sqrt(2);
   base[1].personAt = NULL;
   base[1].nextbase = &base[2];
 
-  base[2].x = SCREEN_WIDTH / HALF;
-  base[2].y = SCREEN_HEIGHT * 0.35;
+  base[2].x = base[0].x;
+  base[2].y = base[0].y - 2 * basewidth / sqrt(2);
   base[2].personAt = NULL;
   base[2].nextbase = &base[3];
 
-  base[3].x = SCREEN_WIDTH * 0.15;
-  base[3].y = SCREEN_HEIGHT / HALF;
+  base[3].x = base[0].x - basewidth / sqrt(2);
+  base[3].y = base[0].y - basewidth / sqrt(2);
   base[3].personAt = NULL;
   base[3].nextbase = &base[0];
 
@@ -78,9 +81,7 @@ void drawField(struct Base bases[4]){
 
   al_draw_line(bases[1].x, bases[1].y, bases[2].x, bases[2].y,
       al_map_rgb(255,255,255), 1);
-  al_draw_line(bases[2].x, bases[2].y, bases[3].x, bases[3].y,
-      al_map_rgb(255,255,255), 1);
-  al_draw_line(bases[3].x, bases[3].y, bases[0].x, bases[0].y,
-      al_map_rgb(255,255,255), 1);
+ al_draw_line(bases[2].x, bases[2].y, bases[3].x, bases[3].y,      al_map_rgb(255,255,255), 1);
+ al_draw_line(bases[3].x, bases[3].y, bases[0].x, bases[0].y,      al_map_rgb(255,255,255), 1);
 
 }

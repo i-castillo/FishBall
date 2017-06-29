@@ -9,11 +9,12 @@
 #define QUARTER 4
 #define THREE_QUARTER 0.75
 #define ONE_TWENTIETH 0.05
-#define INIT_PLAYER_X SCREEN_WIDTH / HALF
-#define INIT_PLAYER_Y SCREEN_HEIGHT * THREE_QUARTER
+#define PIVOT_X       0.25 * SCREEN_WIDTH
+#define PIVOT_Y       0.75 * SCREEN_HEIGHT
+#define INIT_PLAYER_X (SCREEN_WIDTH / HALF + ONE_TWENTIETH * SCREEN_WIDTH)
+#define INIT_PLAYER_Y PIVOT_Y
 #define OFFSET_LENGTH SCREEN_WIDTH / QUARTER
-#define PLAYER_LENGTH OFFSET_LENGTH + ONE_TWENTIETH * SCREEN_WIDTH
-
+#define PLAYER_LENGTH INIT_PLAYER_X - PIVOT_X
 struct Player {
 
   int ID; 
@@ -24,8 +25,9 @@ struct Player {
   int boundX;
   int speed;
   int alive;
-  int length;
+//  int length;
   int score;
+  int power;
 
 
 };
@@ -61,19 +63,18 @@ struct Base {
   
 };
 
-
-
+int calcDeltaX(struct Player * p);
 void calculateBound(struct Player * p);
 void initPlayer(struct Player * p);
 void drawPlayer(struct Player * p);
 void movePlayer(struct Player * p);
 void resetPlayer(struct Player * p);
 void setAlive(struct Player * p, int alive);
-void setSpeed(struct Player * p, int speed);
+void setPower(struct Player * p, int power);
 void initBall(struct Ball * b);
 void drawBall(struct Ball * b);
 void throwBall(struct Ball * b);
-void moveBall(struct Ball * b);
+int moveBall(struct Ball * b);
 int hitBall(struct Player * p, struct Ball * b);
 void initRunners(struct Runner runners[4]);
 void drawRunners(struct Runner runners[4]);
@@ -89,5 +90,8 @@ void calcLine(struct Runner * r, int bx, int by, int rx, int ry);
 /* debug */
 void drawField(struct Base bases[4]);
 void printBases(struct Base bases[4]);
+void setSpeed(struct Player * p, int speed);
+void drawPointVector(struct Player * p, struct Ball * b);
+
 
 #endif

@@ -15,9 +15,6 @@ int loop(struct al_pointers * al_p){
   initRunners(runners);
   initBases(bases);
 
-
-
-
   int done = 0;
   ALLEGRO_EVENT ev;
   int redraw;
@@ -32,10 +29,12 @@ int loop(struct al_pointers * al_p){
       done = 1;
     }
     power = al_get_timer_count(powerTimer);
-    setSpeed(&player, power);
+    setPower(&player, power);
     
     //move entities
-    moveBall(&ball);
+    if(moveBall(&ball)){
+      resetPlayer(&player);
+    };
     movePlayer(&player);
     moveRunners(runners);
     al_wait_for_event(al_p->event_queue, &ev);
@@ -46,14 +45,12 @@ int loop(struct al_pointers * al_p){
 
     else if(ev.type == ALLEGRO_EVENT_KEY_UP){
       switch(ev.keyboard.keycode){
-        case ALLEGRO_KEY_UP:
-          throwBall(&ball);
-          break;
+
         case ALLEGRO_KEY_SPACE:
 
           al_stop_timer(powerTimer);
-          al_set_timer_count(powerTimer, 0);
-          setSpeed(&player, -power);
+          setPower(&player, -power);
+          setSpeed(&player, -6);
           setAlive(&player, 0);
           break;
       }
@@ -62,14 +59,25 @@ int loop(struct al_pointers * al_p){
 
     if(ev.type == ALLEGRO_EVENT_KEY_DOWN){
       switch(ev.keyboard.keycode){
+        case ALLEGRO_KEY_UP:
+          throwBall(&ball);
+          break;
         case ALLEGRO_KEY_K:
           printBases(bases);
           break;
 
         case ALLEGRO_KEY_SPACE:
-          al_start_timer(powerTimer);
-          setAlive(&player, 1);
 
+          if(ball.alive == 1){
+          al_set_timer_count(powerTimer, 0);
+            
+          al_start_timer(powerTimer);
+          
+          setAlive(&player, 1);
+          setSpeed(&player, 3);
+
+
+          }
 
           break;
       }
@@ -77,8 +85,9 @@ int loop(struct al_pointers * al_p){
     }
 
 
-    if(hitBall(&player, &ball)){
-      loadBase(bases, runners, hits, 2);
+    int points = hitBall(&player, &ball);
+    if(points != 0){
+      loadBase(bases, runners, hits, points);
       hits++;
       balls--;
 
@@ -87,7 +96,8 @@ int loop(struct al_pointers * al_p){
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
       //  printDistance(al_p);
-      drawPowerBar(power);
+      drawPointVector(&player, &ball);
+      drawPowerBar(player.power);
       drawBalls(balls);
       drawScore(al_p, player.score);
       drawBall(&ball);
@@ -95,7 +105,7 @@ int loop(struct al_pointers * al_p){
       drawRunners(runners);
       drawField(bases);
       al_flip_display();
-      al_clear_to_color(al_map_rgb(0,0,0));
+     // al_clear_to_color(al_map_rgb(0,0,0));
 
 
     }

@@ -24,6 +24,11 @@ void moveRunners(struct Runner r[4]){
         r[i].y += r[i].speed * sin(r[i].angle);
 
       }
+      else if(r[i].x == SCREEN_HEIGHT * 0.90){
+        (r[i]).basestoGo == 0;
+        fprintf(stderr, "MAMMASM");
+
+      }
       else{
         r[i].x = (*r[i].base).x;
         r[i].y = (*r[i].base).y;
