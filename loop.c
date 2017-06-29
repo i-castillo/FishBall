@@ -104,7 +104,6 @@ int loop(struct al_pointers * al_p){
 
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
-        printDistance(al_p);
     //  drawPointVector(&player, &ball);
       drawPowerBar(player.power);
       drawBalls(balls);
@@ -113,6 +112,8 @@ int loop(struct al_pointers * al_p){
       drawPlayer(&player);
       drawRunners(runners);
       drawField(bases);
+        printDistance(al_p);
+      
       al_flip_display();
      al_clear_to_color(al_map_rgb(0,0,0));
 

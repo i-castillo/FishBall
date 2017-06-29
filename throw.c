@@ -17,12 +17,12 @@ void throwBall(struct Ball * b){
 }
 
 int hitBall(struct Player * p, struct Ball * b){ 
-  if(b->y >=p->y){
+
+  if(b->y + 6 >= p->y && b->alive == 1 && b->hit == 0
+      && p->x + 15 >= b->x){
+   // ){
     fprintf(stderr, "p->x: %d p->y: %d \n", p->x, p->y);
-  }
-  if(b->y >= p->y && b->alive == 1 && b->hit == 0
-      && b->x <= p->x - EXTRA_BAT){
-    fprintf(stderr, "p->x: %d \n", p->x);
+    
     
     
     b->hit = 1;
@@ -30,6 +30,7 @@ int hitBall(struct Player * p, struct Ball * b){
     p->y = b->y;
     double angle = atan2((double)d, OFFSET_LENGTH) + acos(0);
     b->angle = angle;
+    b->speed = 0;
     b->speed = -1 * sqrt(fabs(p->speed) * fabs(p->power));
     if(b->speed == 0){
       b->alive = 0;
