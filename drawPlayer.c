@@ -18,11 +18,12 @@ void movePlayer(struct Player * p){
   p->y += p->speed;
   if(p->y < INIT_PLAYER_Y - p->boundY){
     p->speed = 0;
-    p->y = INIT_PLAYER_Y;
+    p->y = INIT_PLAYER_Y - p->boundY;
   }
   else if(p->y > (INIT_PLAYER_Y + p->boundY)){
     
     p->y = INIT_PLAYER_Y + p->boundY;
+    p->speed = 0;
   }
    p->x = calcDeltaX(p);
   }
@@ -52,9 +53,9 @@ void setAlive(struct Player * p, int alive){
 
 void calculateBound(struct Player * p){
 
-  p->boundY = sqrt((0.10 * SCREEN_WIDTH) * SCREEN_WIDTH /4 + 
-      0.05 * SCREEN_WIDTH * 0.05 * SCREEN_WIDTH);
-
+//  p->boundY = sqrt((0.10 * SCREEN_WIDTH) * SCREEN_WIDTH /4 + 
+//      0.05 * SCREEN_WIDTH * 0.05 * SCREEN_WIDTH);
+  p->boundY = PLAYER_LENGTH;
 
 }
 

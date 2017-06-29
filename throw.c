@@ -17,8 +17,13 @@ void throwBall(struct Ball * b){
 }
 
 int hitBall(struct Player * p, struct Ball * b){ 
-
-  if(b->y > p->y && b->alive == 1 && b->hit == 0){
+  if(b->y >=p->y){
+    fprintf(stderr, "p->x: %d p->y: %d \n", p->x, p->y);
+  }
+  if(b->y >= p->y && b->alive == 1 && b->hit == 0
+      && b->x <= p->x - EXTRA_BAT){
+    fprintf(stderr, "p->x: %d \n", p->x);
+    
     
     b->hit = 1;
     int d = p->y - INIT_PLAYER_Y;

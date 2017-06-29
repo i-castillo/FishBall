@@ -11,7 +11,8 @@
 #define ONE_TWENTIETH 0.05
 #define PIVOT_X       0.25 * SCREEN_WIDTH
 #define PIVOT_Y       0.75 * SCREEN_HEIGHT
-#define INIT_PLAYER_X (SCREEN_WIDTH / HALF + ONE_TWENTIETH * SCREEN_WIDTH)
+#define EXTRA_BAT ONE_TWENTIETH * SCREEN_WIDTH
+#define INIT_PLAYER_X SCREEN_WIDTH / HALF + EXTRA_BAT
 #define INIT_PLAYER_Y PIVOT_Y
 #define OFFSET_LENGTH SCREEN_WIDTH / QUARTER
 #define PLAYER_LENGTH INIT_PLAYER_X - PIVOT_X
@@ -34,8 +35,8 @@ struct Player {
 
 struct Ball {
   int ID;
-  int x;
-  int y;
+  double x;
+  double y;
   int speed;
   double angle;
   int alive;

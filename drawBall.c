@@ -15,11 +15,11 @@ void initBall(struct Ball * b){
 
 int moveBall(struct Ball * b){
 
-  b->y = b->y + b->speed * sin(b->angle);
-  b->x = b->x + b->speed * cos(b->angle);
-//  fprintf(stderr, "%f %f \n", b->x, b->y);
-  if(b->y > SCREEN_HEIGHT || b->y < 0
-      || b->x < 0 || b->x > SCREEN_WIDTH){
+  b->y += (double)b->speed * sin(b->angle);
+  b->x += (double)b->speed * cos(b->angle);
+//  fprintf(stderr, "%d %d \n", b->x, b->y);
+  if(b->y >= SCREEN_HEIGHT || b->y <= 0
+      || b->x <= 0 || b->x >= SCREEN_WIDTH){
     b->alive = 0;
     return 1;
   } 
@@ -27,7 +27,7 @@ int moveBall(struct Ball * b){
 }
 void drawBall(struct Ball * b){
   if(b->y > 550 && b->y < 650){
- // fprintf(stderr, "drew at %d\n", b->y);
+ // fprintf(stderr, "drew at %f\n", b->y);
   }
   al_draw_filled_circle(b->x, b->y, 2, al_map_rgb(0,b->color,0));
 

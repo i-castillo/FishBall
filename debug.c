@@ -25,3 +25,28 @@ void printDistance(struct al_pointers * al_p){
   };
 
 };
+
+void drawAngle(){
+  double i;
+  for(i = 0; i < 3.15; i+= 0.1){
+    al_draw_circle(SCREEN_WIDTH/2 *(1 + cos(i)), SCREEN_WIDTH/2 * (1.8 - sin(i)),
+            2, al_map_rgb(255, 0, 255), 2);
+  };
+
+};
+
+void printAngle(){
+  int i;
+  double pi = 3.141592;
+  for(i = -OFFSET_LENGTH; i < OFFSET_LENGTH; i+=3){
+    double angle = atan2((double)i, OFFSET_LENGTH) + acos(0);
+    angle = angle * 180.0 / pi; 
+    if(angle > 85 && angle < 90){
+    fprintf(stderr, "%#2f %d ", angle, i);
+
+    }
+    
+
+  };
+
+};

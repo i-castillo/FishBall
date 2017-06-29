@@ -25,7 +25,7 @@ int loop(struct al_pointers * al_p){
   ALLEGRO_TIMER * powerTimer = al_create_timer(0.25);
   while(!done)
   {
-    if(balls <= 1){
+    if(balls <= 0){
       done = 1;
     }
     power = al_get_timer_count(powerTimer);
@@ -35,7 +35,7 @@ int loop(struct al_pointers * al_p){
     if(moveBall(&ball)){
       resetPlayer(&player);
     };
-    movePlayer(&player);
+   movePlayer(&player);
     moveRunners(runners);
     al_wait_for_event(al_p->event_queue, &ev);
     if(ev.type == ALLEGRO_EVENT_TIMER){
@@ -44,13 +44,22 @@ int loop(struct al_pointers * al_p){
     }
 
     else if(ev.type == ALLEGRO_EVENT_KEY_UP){
-      switch(ev.keyboard.keycode){
 
+
+      switch(ev.keyboard.keycode){
+  /*      case ALLEGRO_KEY_W:
+          player.y-= 6;
+          break;
+        
+        case ALLEGRO_KEY_S:
+          player.y+= 3;
+          break; */
+          
         case ALLEGRO_KEY_SPACE:
 
           al_stop_timer(powerTimer);
           setPower(&player, -power);
-          setSpeed(&player, -6);
+          setSpeed(&player, -6 * power);
           setAlive(&player, 0);
           break;
       }
@@ -69,10 +78,10 @@ int loop(struct al_pointers * al_p){
         case ALLEGRO_KEY_SPACE:
 
           if(ball.alive == 1){
-          al_set_timer_count(powerTimer, 0);
+          al_set_timer_count(powerTimer, 1);
             
           al_start_timer(powerTimer);
-          
+      
           setAlive(&player, 1);
           setSpeed(&player, 3);
 
@@ -95,8 +104,8 @@ int loop(struct al_pointers * al_p){
 
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
-      //  printDistance(al_p);
-      drawPointVector(&player, &ball);
+        printDistance(al_p);
+    //  drawPointVector(&player, &ball);
       drawPowerBar(player.power);
       drawBalls(balls);
       drawScore(al_p, player.score);
@@ -105,7 +114,7 @@ int loop(struct al_pointers * al_p){
       drawRunners(runners);
       drawField(bases);
       al_flip_display();
-     // al_clear_to_color(al_map_rgb(0,0,0));
+     al_clear_to_color(al_map_rgb(0,0,0));
 
 
     }

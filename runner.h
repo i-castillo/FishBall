@@ -30,4 +30,6 @@ void drawScore(struct al_pointers * al_p, int score);
 void drawBalls(int ballsRem);
 void drawPowerBar(int power);
 void print(char * string);
+void printAngle();
+void drawAngle();
 #endif
