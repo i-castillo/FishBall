@@ -20,21 +20,19 @@ int hitBall(struct Player * p, struct Ball * b){
 
   if(b->y + 6 >= p->y && b->alive == 1 && b->hit == 0
       && p->x + 15 >= b->x){
-   // ){
-    fprintf(stderr, "p->x: %d p->y: %d \n", p->x, p->y);
-    
-    
-    
+
     b->hit = 1;
-    int d = p->y - INIT_PLAYER_Y;
+    double d = INIT_PLAYER_Y - p->y;
     p->y = b->y;
-    double angle = atan2((double)d, OFFSET_LENGTH) + acos(0);
+
+
+    double angle = atan(d / OFFSET_LENGTH);
     b->angle = angle;
     b->speed = 0;
     b->speed = -1 * sqrt(fabs(p->speed) * fabs(p->power));
     if(b->speed == 0){
       b->alive = 0;
-      
+
     }
     p->speed = 0;
 
@@ -55,15 +53,15 @@ int hitBall(struct Player * p, struct Ball * b){
       return 1;
     }
     else{
-    return 0;
+      return 1;
     }
   }
   return 0;
-}
+  }
 
-void resetPlayer(struct Player * p){
-  p->y = INIT_PLAYER_Y;
-  p->speed = 0;
-  p->power = 0;
+  void resetPlayer(struct Player * p){
+    p->y = INIT_PLAYER_Y;
+    p->speed = 0;
+    p->power = 0;
 
-};
+  };

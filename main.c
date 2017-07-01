@@ -11,7 +11,7 @@ int main(void)
   if(!init_game(pointers, width, height))
     return EXIT_FAILURE;
   
- 
+    srand(time(NULL));
     loop(pointers);
     destroy_allegro(pointers);
 

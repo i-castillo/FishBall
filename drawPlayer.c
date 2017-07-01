@@ -9,6 +9,7 @@ void initPlayer(struct Player * p){
 //  p->length = PLAYER_LENGTH;
   p->speed = 0;
   p->score = 0;
+  p->power = 0;
   calculateBound(p);
 
 }
@@ -45,11 +46,11 @@ void setSpeed(struct Player * p, int speed){
 
   }
     
-};
+}
 
 void setAlive(struct Player * p, int alive){
   p->alive = alive;
-};
+}
 
 void calculateBound(struct Player * p){
 

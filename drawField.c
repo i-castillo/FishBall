@@ -3,9 +3,9 @@
 #include <math.h>
 void initBases(struct Base base[4]){
 
-  int basewidth = SCREEN_WIDTH /2 * sqrt(2) ;
+  int basewidth = SCREEN_WIDTH/3 * sqrt(2) ;
   base[0].x = SCREEN_WIDTH / HALF;
-  base[0].y = SCREEN_HEIGHT * 0.65;
+  base[0].y = SCREEN_HEIGHT * 0.70;
   base[0].personAt = NULL;
   base[0].nextbase = &base[1];
 

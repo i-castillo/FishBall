@@ -19,8 +19,8 @@
 struct Player {
 
   int ID; 
-  int x;
-  int y;
+  double x;
+  double y;
   int health;
   int boundY;
   int boundX;
@@ -64,6 +64,19 @@ struct Base {
   
 };
 
+struct Catcher {
+  char ID;
+  double x;
+  double y;
+  int speed;
+  double angle;
+  struct Base * base;
+  int alive; //can control
+  int catched;
+
+};
+
+
 int calcDeltaX(struct Player * p);
 void calculateBound(struct Player * p);
 void initPlayer(struct Player * p);
@@ -93,6 +106,10 @@ void drawField(struct Base bases[4]);
 void printBases(struct Base bases[4]);
 void setSpeed(struct Player * p, int speed);
 void drawPointVector(struct Player * p, struct Ball * b);
-
-
+void initCatchers(struct Catcher c[4]);
+int moveCatcher(struct Catcher * c, struct Ball * b);
+void drawCatchers(struct Catcher c[4]);
+void randomizeCatchers(struct Catcher c[4]);
+void drawCatcherswithPos(ALLEGRO_FONT * f, struct Catcher c[4]);
+struct Catcher * checkIfCatch(struct Catcher c[4], struct Ball * b);
 #endif
