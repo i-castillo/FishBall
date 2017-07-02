@@ -3,7 +3,6 @@
 #include "runner.h"
 
 void throwBall(struct Ball * b){
-  if(b->alive == 0){
 
     b->x = SCREEN_WIDTH / HALF;
     b->y = SCREEN_HEIGHT * 0.25;
@@ -12,24 +11,50 @@ void throwBall(struct Ball * b){
     b->angle = acos(0);
     b->hit = 0;
 
+  
+
+}
+
+int catchBall(struct Catcher c[4], struct Ball * b){
+
+  if(b->y >= SCREEN_HEIGHT || b->y <= 0
+      || b->x <= 0 || b->x >= SCREEN_WIDTH){
+    
+    return 2;
+  } 
+  if(b->speed == 0){
+    return 1;
   }
 
+  int i;
+  for(i = 0; i < 4; i++){
+    
+    if( fabs(b->x - c[i].x) < 20 && fabs(b->y - c[i].y) < 20){
+      b->speed = 0;
+      return 1;
+    } 
+
+  }
+
+  return 0;
 }
 
 int hitBall(struct Player * p, struct Ball * b){ 
 
   if(b->y + 6 >= p->y && b->alive == 1 && b->hit == 0
       && p->x + 15 >= b->x){
-
-    b->hit = 1;
-    double d = INIT_PLAYER_Y - p->y;
     p->y = b->y;
 
+    b->hit = 1;
 
-    double angle = atan(d / OFFSET_LENGTH);
+    double dx =  PIVOT_X - p->x;
+    double dy = PIVOT_Y - p->y;
+    double angle =  atan2(dy, dx) + acos(0);
+    fprintf(stderr, "\n%f %f\n", angle, angle * 180/ 3.14159);
+
     b->angle = angle;
     b->speed = 0;
-    b->speed = -1 * sqrt(fabs(p->speed) * fabs(p->power));
+    b->speed = 1 * sqrt(fabs(p->speed) * fabs(p->power));
     if(b->speed == 0){
       b->alive = 0;
 
@@ -53,15 +78,15 @@ int hitBall(struct Player * p, struct Ball * b){
       return 1;
     }
     else{
-      return 1;
+      return 0;
     }
   }
   return 0;
-  }
+}
 
-  void resetPlayer(struct Player * p){
-    p->y = INIT_PLAYER_Y;
-    p->speed = 0;
-    p->power = 0;
+void resetPlayer(struct Player * p){
+  p->y = INIT_PLAYER_Y;
+  p->speed = 0;
+  p->power = 0;
 
-  };
+};

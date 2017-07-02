@@ -85,9 +85,9 @@ void drawPointVector(struct Player * p, struct Ball * b){
   
   int deltaX = p->x - PIVOT_X;
   int deltaY = p->y - PIVOT_Y;
-  al_draw_line(p->x, p->y, p->x - deltaY, p->y + deltaX, al_map_rgb(0,0,
+  al_draw_line(p->x, p->y, p->x + deltaY, p->y - deltaX, al_map_rgb(0,0,
         255), 3); 
 
- al_draw_line(SCREEN_WIDTH/2, INIT_PLAYER_Y, b->x, b->y, al_map_rgb(255, 0, 255), 3);
+// al_draw_line(SCREEN_WIDTH/2, INIT_PLAYER_Y, b->x, b->y, al_map_rgb(255, 0, 255), 3);
 
 };

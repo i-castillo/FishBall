@@ -1,0 +1,12 @@
+Objective: Score as much points as possible, with only [8] Swings.
+
+Rules:
+
+  1. If the ball hits a catcher, then that is an out, and any guys on 
+  base, are also out. 
+
+  2. The number of bases you run depends on how much poweryou hit 
+  the ball with.
+
+  3. Once you release the bat, your hit is over. 
+

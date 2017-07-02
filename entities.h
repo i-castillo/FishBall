@@ -68,7 +68,7 @@ struct Catcher {
   char ID;
   double x;
   double y;
-  int speed;
+  double speed;
   double angle;
   struct Base * base;
   int alive; //can control
@@ -88,7 +88,7 @@ void setPower(struct Player * p, int power);
 void initBall(struct Ball * b);
 void drawBall(struct Ball * b);
 void throwBall(struct Ball * b);
-int moveBall(struct Ball * b);
+void moveBall(struct Ball * b);
 int hitBall(struct Player * p, struct Ball * b);
 void initRunners(struct Runner runners[4]);
 void drawRunners(struct Runner runners[4]);
@@ -107,9 +107,13 @@ void printBases(struct Base bases[4]);
 void setSpeed(struct Player * p, int speed);
 void drawPointVector(struct Player * p, struct Ball * b);
 void initCatchers(struct Catcher c[4]);
-int moveCatcher(struct Catcher * c, struct Ball * b);
+void moveCatchers(struct Catcher c[4]);
 void drawCatchers(struct Catcher c[4]);
 void randomizeCatchers(struct Catcher c[4]);
 void drawCatcherswithPos(ALLEGRO_FONT * f, struct Catcher c[4]);
 struct Catcher * checkIfCatch(struct Catcher c[4], struct Ball * b);
+int catchBall(struct Catcher c[4], struct Ball * b);
+int stillrunning(struct Catcher c[4]);
+void removeRunners(struct Runner r[4]);
+void clearBases(struct Base bases[4]);
 #endif

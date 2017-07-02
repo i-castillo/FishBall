@@ -15,22 +15,25 @@ void initCatchers(struct Catcher c[4]){
 
 
 }
+int stillrunning(struct Catcher c[4]){
+  int i;
+  for(i = 0; i < 4; i++){
+    if(c[i].speed != 0){
+      return 1;
+    }
+  }
+  return 0;
+}
 
 void randomizeCatchers(struct Catcher c[4]){
 
   c[0].x = rand() % (SCREEN_WIDTH / 2)  + SCREEN_WIDTH / 8;
   c[0].y = rand() % (SCREEN_HEIGHT / 4) + SCREEN_HEIGHT / 4;
-  c[0].angle = atan2((INIT_PLAYER_Y - c[0].y) +
-    acos(1), (c[0].x - SCREEN_WIDTH/2)); 
-  if(c[0].x < SCREEN_WIDTH/2){
- //   c[0].angle *= -1;
-  }
+
   c[0].catched = 0;
 
   c[1].x = rand() % (SCREEN_WIDTH / 2) + SCREEN_WIDTH / 2;
   c[1].y = rand() % (SCREEN_HEIGHT)/4 + SCREEN_HEIGHT / 4;
-  c[1].angle = atan2((INIT_PLAYER_Y - c[1].y) +
-    acos(1), (c[1].x - SCREEN_WIDTH/2)); 
   if(c[1].x < SCREEN_WIDTH/2){
  //   c[1].angle *= -1;
   }
@@ -39,8 +42,7 @@ void randomizeCatchers(struct Catcher c[4]){
 
   c[2].x = rand() % (SCREEN_WIDTH / 2)  + SCREEN_WIDTH / 8;
   c[2].y = rand() % (SCREEN_HEIGHT)/4 + SCREEN_HEIGHT / 4;
-  c[2].angle = atan2((INIT_PLAYER_Y - c[2].y) +
-    acos(1), (c[2].x - SCREEN_WIDTH/2)); 
+
   if(c[2].x < SCREEN_WIDTH/2){
  //   c[2].angle *= -1;
   }
@@ -49,8 +51,7 @@ void randomizeCatchers(struct Catcher c[4]){
 
   c[3].x = rand() % (SCREEN_WIDTH / 2)  + SCREEN_WIDTH / 2;
   c[3].y = rand() % (SCREEN_HEIGHT)/4  + SCREEN_HEIGHT / 4;
-  c[3].angle = atan2((INIT_PLAYER_Y - c[3].y) +
-    acos(1), (c[3].x - SCREEN_WIDTH/2)); 
+
   if(c[3].x < SCREEN_WIDTH/2){
  //   c[3].angle *= -1;
   }
@@ -63,7 +64,7 @@ struct Catcher * checkIfCatch(struct Catcher c[4], struct Ball * b){
   int i;
   for(i = 0; i < 4; i++){
     if(fabs(b->angle - c[i].angle) < 0.25){
-      fprintf(stderr, "ughasd");
+
       c[i].catched = 1;
       return &c[i];
     }
@@ -72,28 +73,9 @@ struct Catcher * checkIfCatch(struct Catcher c[4], struct Ball * b){
   return 0;
 }
 
-int moveCatcher(struct Catcher * c, struct Ball * b){
-  if(c == NULL || b == NULL){
-    return 0;
-  }
-//  fprintf(stderr,"%f %f\n", fabs(b->x - c->x), fabs(b->y - c->y) );
-  if((fabs(b->x - c->x) < 25 
-        && fabs(b->y - c->y) < 25)){
-    fprintf(stderr, "hheemm");
-    c->x = b->x;
-    c->y = b->y;
-    c->angle = b->angle;
-    b->speed = 0;
-    return 1;
-  }
-  return 0;
+void moveCatchers(struct Catcher c[4]){
+  
 }
-
-
-
-
-
-
 
 void drawCatchers(struct Catcher c[4]){
   int i;

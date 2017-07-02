@@ -6,17 +6,27 @@ void initRunners(struct Runner r[4]){
   for(i = 0; i < 4; i++){
     r[i].ID = i;
     r[i].x = SCREEN_WIDTH / HALF;
-    r[i].y = SCREEN_HEIGHT * 0.90;
-    r[i].speed = 5;
+    r[i].y = SCREEN_HEIGHT * 0.70;
+    r[i].speed = 0;
     r[i].alive = 0;
     r[i].base = NULL;
   };
 
 }
 
+void removeRunners(struct Runner r[4]){
+  int i;
+  for(i = 0; i < 4; i++){
+    r[i].alive = 0;
+    r[i].x = SCREEN_WIDTH / HALF;
+    r[i].y = SCREEN_HEIGHT * 0.70;
+    r[i].base = NULL;
+    r[i].basestoGo = 0; 
+  }
+}
 void moveRunners(struct Runner r[4]){
   int i;
-  for(int i = 0; i < 4; i++){
+  for(i = 0; i < 4; i++){
     if(r[i].alive == 1){
       if(fabs(r[i].x - (*r[i].base).x) > 2){
 
@@ -24,9 +34,9 @@ void moveRunners(struct Runner r[4]){
         r[i].y += r[i].speed * sin(r[i].angle);
 
       }
-      else if(r[i].x == SCREEN_HEIGHT * 0.90){
-        (r[i]).basestoGo == 0;
-        fprintf(stderr, "MAMMASM");
+      else if(r[i].x == SCREEN_HEIGHT * 0.70){
+        (r[i]).basestoGo = 0;
+        r[i].alive = 0;
 
       }
       else{
