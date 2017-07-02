@@ -10,3 +10,9 @@ Rules:
 
   3. Once you release the bat, your hit is over. 
 
+
+Plan:
+
+  1. On startup, begin game. Throw ball. 
+  2. Hit ball. 
+  3. Catch ball.
