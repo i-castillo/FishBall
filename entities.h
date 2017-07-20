@@ -131,6 +131,7 @@ void drawPlayer(struct Player * p);
 void throwBall(struct Ball * b, int speed);
 int catchBall(struct Catcher c[], int numCatchers, struct Ball * b, int radius);
 int hitBall(struct Player * p, struct Ball * b);
+void checkScore(struct Runner r[], int numRunners, int * score);
 
 /* gameUtils.c */
 int collide(double xOne, double yOne, double xTwo, double yTwo, double distance);

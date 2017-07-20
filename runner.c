@@ -47,7 +47,7 @@ void moveRunners(struct Runner r[], int numRunners){
       }
       
       else if(r[i].y == SCREEN_HEIGHT * 0.70){
-        fprintf(stderr, "htmmmm");
+        
         (r[i]).basestoGo = 0;
         r[i].alive = 0;
         r[i].speed = 0;

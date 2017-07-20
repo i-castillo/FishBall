@@ -66,7 +66,6 @@ void loop(struct al_pointers * al_p, struct Game * g){
 
     else if(ev.type == ALLEGRO_EVENT_KEY_UP){
       switch(ev.keyboard.keycode){
-
         case ALLEGRO_KEY_SPACE:
 
 
@@ -129,6 +128,11 @@ void loop(struct al_pointers * al_p, struct Game * g){
       }
       if(points == -1){ //no hit.
         hits++;
+        stage = 1;
+      }
+      if(points == -2){
+        hits++;
+        al_play_sample(hitSound, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
         stage = 1;
       }
     }
@@ -209,8 +213,8 @@ void loop(struct al_pointers * al_p, struct Game * g){
       drawBall(&ball);
       drawPlayer(&player);
       drawRunners(runners, numRunners);
-      drawAngle();
-      
+      //drawAngle();
+
       //printDistance(al_p);
 
       al_flip_display();
