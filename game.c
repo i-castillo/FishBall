@@ -9,7 +9,11 @@ int init_game( struct al_pointers * al_p, int width, int height){
   al_init_font_addon();
 	al_init_ttf_addon();
   al_init_primitives_addon();
-  
+  al_init_image_addon();
+  al_init_acodec_addon();
+  al_install_keyboard();
+  al_install_audio();
+
   al_p->display = al_create_display(width, height);
   al_p->score =	al_load_font("GFSDidot.otf", 18, 0);
 	al_p->timer = al_create_timer(1.0 / FPS);
@@ -22,6 +26,8 @@ int init_game( struct al_pointers * al_p, int width, int height){
 
   }
 
+  al_register_event_source(al_p->event_queue, 
+      al_get_keyboard_event_source());
   
 	al_register_event_source(al_p->event_queue, 
       al_get_timer_event_source(al_p->timer));
@@ -39,5 +45,13 @@ int destroy_allegro( struct al_pointers * al_p){
 
   free(al_p);
 };
+
+void updateDifficulty(struct Game * g, int SPEED[], int size){
+  int i;
+  for(i = 0; i < size; i++){
+    SPEED[i] += g->difficulty;
+  }
+}
+
 
 

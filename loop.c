@@ -1,45 +1,61 @@
 /* loop.c */
 #include "runner.h"
 
-int loop(struct al_pointers * al_p){
+void loop(struct al_pointers * al_p, struct Game * g){
+  int numBases = 4;
+  int numRunners = 4;
+  int numCatchers = 4;
+  int collisionRadius = 30;
 
-  al_install_keyboard();
-  al_register_event_source(al_p->event_queue, al_get_keyboard_event_source());
-
+  int imageWidth;
+  int imageHeight;
   /* Initialize the objects */
   struct Player player;
   struct Ball ball;
-  struct Runner runners[4]; 
-  struct Base bases[4];
-  struct Catcher catchers[4];
+  struct Runner runners[numRunners]; 
+  struct Base bases[numBases];
+  struct Catcher catchers[numCatchers];
   struct Catcher * catcher;
 
   initPlayer(&player);
   initBall(&ball);
-  initRunners(runners);
-  initBases(bases);
-  initCatchers(catchers);
-  randomizeCatchers(catchers);
+  initRunners(runners, numRunners);
+  initBases(bases, numBases);
+  initCatchers(catchers, numCatchers);
+  randomizeCatchers(catchers, numCatchers, collisionRadius);
 
   int done = 0;
   ALLEGRO_EVENT ev;
   int redraw;
-  int balls = 16;
+  int balls = 8;
   int hits = 0;
   int power = 0;
   int randomed;
   int points;
+  int score;
   int stage = 3;
   int ballcaught = 0;
-  int released;
+  int released = 1;
   int begin = 0;
+  ALLEGRO_BITMAP * background = al_load_bitmap("background.png");
   ALLEGRO_TIMER * powerTimer = al_create_timer(0.25);
   al_set_timer_count(powerTimer, 0);
+  ALLEGRO_TIMER * waitTimer = al_create_timer(0.20);
+  ALLEGRO_BITMAP * img_speed = al_load_bitmap("speed.png");
+  ALLEGRO_SAMPLE * hitSound = al_load_sample("hit.wav");
+  ALLEGRO_SAMPLE * powerSound = al_load_sample ("power.wav");
 
+  al_reserve_samples(1);
+  int SPEED[] = {5, 7, 4, 6, 8, 4, 3, 5, 9};
+
+  if(g->difficulty != 1){
+    updateDifficulty(g, SPEED, 9);    
+  }
+  //int SPEED[] = {2, 2, 2, 2,  2, 2, 2, 2, 2};
   while(!done)
   {
-    if(balls <= 0){
-      done = 1;
+    if(player.power > 10){
+      fprintf(stderr, "wtf is going on\n");
     }
 
     al_wait_for_event(al_p->event_queue, &ev);
@@ -52,14 +68,22 @@ int loop(struct al_pointers * al_p){
       switch(ev.keyboard.keycode){
 
         case ALLEGRO_KEY_SPACE:
-          if(stage == 0){
+
+
           /* Release bat */
           al_stop_timer(powerTimer);
-          setPower(&player, -power);
-          setSpeed(&player, -6 * power);
-          setAlive(&player, 0);
-          released = 1;
-          break;
+          power = al_get_timer_count(powerTimer); 
+          al_set_timer_count(powerTimer, 1);
+
+          if(power > 2){
+            released = 1;
+          }
+          if(stage == 0 ){
+
+            setPower(&player, -power);
+            setSpeed(&player, -6 * power);
+            setAlive(&player, 0);
+            break;
 
           }
       }
@@ -71,18 +95,23 @@ int loop(struct al_pointers * al_p){
           begin = 1;
           break;
         case ALLEGRO_KEY_UP:
+          printRunners(runners, numRunners);
+          break;
         case ALLEGRO_KEY_K: 
+          printBases(bases, numBases);
+          break;
         case ALLEGRO_KEY_SPACE:
+
           if(stage == 0 && released == 0){
-          /* Start bat */
-          al_set_timer_count(powerTimer, 1);
-          al_start_timer(powerTimer);
-          setAlive(&player, 1);
-          setSpeed(&player, 3);
+            /* Start bat */
+            al_set_timer_count(powerTimer, 1);
+            al_start_timer(powerTimer);
+            setAlive(&player, 1);
+            setSpeed(&player, 3);
 
           }
-           break;
-          
+          break;
+
       }
     }
 
@@ -90,61 +119,98 @@ int loop(struct al_pointers * al_p){
       power = al_get_timer_count(powerTimer); 
       setPower(&player, power);
       points = hitBall(&player, &ball);
-      if(points != 0){
+      if(points > 0){
+        hits++;
+        al_play_sample(hitSound, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+        loadBase(bases, numBases, runners, numRunners, hits, 5, points);
 
-        loadBase(bases, runners, hits, points);
         stage = 1;
 
+      }
+      if(points == -1){ //no hit.
+        hits++;
+        stage = 1;
       }
     }
 
     else if(stage == 1){
-      ballcaught = catchBall(catchers, &ball);
-      if(ballcaught == 1){
+      checkScore(runners, numRunners, &score);
+      score += points;
+      points = 0;
+      ballcaught = catchBall(catchers, numCatchers, &ball, 30);
+      if(ballcaught == 1){ // 1 means catcher caught
         stage = 2; 
-        removeRunners(runners);
-        clearBases(bases);
-        /* Remove players from the field */
-      }
-      else if(ballcaught == 2){
+        removeRunners(runners, numRunners);
+        clearBases(bases, numBases);
+        al_play_sample(powerSound, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 
-        stage = 2;            
+        /* Remove players from the field */
+        randomizeCatchers(catchers, numCatchers, collisionRadius);
+        al_start_timer(waitTimer);
+        al_set_timer_count(waitTimer, 0);
+      }
+      else if(ballcaught == 2){ // 2 means ball wasn't caught.
+
+        stage = 2;  
+        randomizeCatchers(catchers, numCatchers, collisionRadius);        
+        al_start_timer(waitTimer);
+        al_set_timer_count(waitTimer, 0);
       }
 
     }
 
-    else if(stage == 2 && stillrunning(catchers) == 0){
-      hits++;
-      balls--;
-      released = 0;
-      resetPlayer(&player);
-      throwBall(&ball);
-      stage = 0;
+    else if(stage == 2 && stillRunning(runners, numRunners) == 0){
 
+      if(al_get_timer_count(waitTimer) > 2){
+
+        if(balls <= 0){
+          done = 1;
+        }
+
+        al_stop_timer(waitTimer);
+        al_set_timer_count(waitTimer, 0);
+        balls--;
+        released = 0;
+        resetPlayer(&player);
+
+        throwBall(&ball, SPEED[hits]);
+        stage = 0;
+
+      }
     }
 
     else if(stage == 3){
       if(begin == 1){
+        al_start_timer(waitTimer);
+        al_set_timer_count(waitTimer, 0);
+
         stage = 2;
       }
     }
-      
+
     moveBall(&ball);
-    moveCatchers(catcher);
+    if(al_get_timer_count(al_p->timer) % 120 == 0){
+      moveCatchers(catchers, numCatchers, 4);
+    }
     movePlayer(&player);
-    moveRunners(runners);
+    moveRunners(runners, numRunners);
 
     if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
       redraw = 0;
-      drawPointVector(&player, &ball);
-      drawCatcherswithPos(al_p->score, catchers);
+      drawBackground(background);
+      drawBases(bases, numBases);
+      drawSpeed(img_speed, al_p, SPEED[hits]);
+      //    drawPointVector(&player, &ball);
+      drawCatchers(catchers, numCatchers);
+      // drawCatcherswithPos(al_p->score, catchers);
       drawPowerBar(player.power);
       drawBalls(balls);
       drawScore(al_p, player.score);
       drawBall(&ball);
       drawPlayer(&player);
-      drawRunners(runners);
-      drawField(bases);
+      drawRunners(runners, numRunners);
+      drawAngle();
+      
       //printDistance(al_p);
 
       al_flip_display();

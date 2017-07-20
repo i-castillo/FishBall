@@ -1,0 +1,68 @@
+debug.c:    al_draw_textf(al_p->score, al_map_rgb(125,125,125), 200, i-10, 0, "%i", i);
+debug.c:  int deltaX = p->x - PIVOT_X;
+debug.c:  int deltaY = p->y - PIVOT_Y;
+debug.c:  al_draw_line(p->x, p->y, p->x + deltaY, p->y - deltaX, al_map_rgb(0,0,
+Binary file entities.h.gch matches
+game.c:  al_p->display = al_create_display(width, height);
+game.c:  al_p->score =	al_load_font("GFSDidot.otf", 18, 0);
+game.c:	al_p->timer = al_create_timer(1.0 / FPS);
+game.c:  al_p->event_queue = al_create_event_queue();
+game.c:  if(!al_p->display || !al_p->score || !al_p->timer || !al_p->event_queue){
+game.c:  al_register_event_source(al_p->event_queue, 
+game.c:	al_register_event_source(al_p->event_queue, 
+game.c:      al_get_timer_event_source(al_p->timer));
+game.c:	al_start_timer(al_p->timer);
+game.c:  	al_destroy_event_queue(al_p->event_queue);
+game.c:	al_destroy_timer(al_p->timer);
+game.c:	al_destroy_display(al_p->display);	
+Binary file game.h.gch matches
+Binary file GFSDidot.otf matches
+Binary file images.h.gch matches
+loop.c:    al_wait_for_event(al_p->event_queue, &ev);
+loop.c:    if(al_get_timer_count(al_p->timer) % 120 == 0){
+loop.c:    if(redraw == 1 && al_is_event_queue_empty(al_p->event_queue)){
+loop.c:      // drawCatcherswithPos(al_p->score, catchers);
+player.c:  p->x = INIT_PLAYER_X;
+player.c:  p->y = INIT_PLAYER_Y;
+player.c:  p->alive = 0;
+player.c:  p->speed = 0;
+player.c:  p->power = 0;
+player.c:  p->image = al_load_bitmap(BAT_IMAGE);
+player.c:  p->boundY = PLAYER_LENGTH;
+player.c:  p->y += p->speed;
+player.c:  if(p->y < INIT_PLAYER_Y - p->boundY){
+player.c:    p->speed = 0;
+player.c:    p->y = INIT_PLAYER_Y - p->boundY;
+player.c:  else if(p->y > (INIT_PLAYER_Y + p->boundY)){
+player.c:    p->y = INIT_PLAYER_Y + p->boundY;
+player.c:    p->speed = 0;
+player.c:  p->x = calcDeltaX(p);
+player.c:  if(p->alive == 1){
+player.c:    p->power = 1 * power;
+player.c:  if(p->alive == 1){
+player.c:    p->speed = speed;
+player.c:  p->alive = alive;
+player.c:  p->y = INIT_PLAYER_Y;
+player.c:  p->speed = 0;
+player.c:  p->power = 0;
+player.c:  double dist = p->y - PIVOT_Y; //ranges from -86 to 86. PLAYER_LENGTH = 150. 
+player.c:  al_draw_scaled_rotated_bitmap(p->image, 0, 0, PIVOT_X, PIVOT_Y, 2, 1,
+player.c:      atan2(  p->y - PIVOT_Y, p->x - PIVOT_X), 0);
+player.c:  // al_draw_line(PIVOT_X , PIVOT_Y,  p->x, p->y, al_map_rgb(255, 0, 0), 2);
+player.c:  //  al_draw_rectangle(p->x -5, p->y, p->x + 5, p->y - p->boundY, al_map_rgb(127,127,0), 1);
+player.c:  al_destroy_bitmap(p->image);
+Binary file runner.h.gch matches
+screen.c:    al_draw_textf(al_p->score, al_map_rgb(255,255,255), 200, 10, 0, "%i", score );
+screen.c:    al_draw_textf(al_p->score, al_map_rgb(255,255,255), SCREEN_WIDTH /2 + 50,
+screen.c:      al_wait_for_event(al_p->event_queue, &ev);
+screen.c:      al_wait_for_event(al_p->event_queue, &ev);
+screen.c:      al_wait_for_event(al_p->event_queue, &ev);
+throw.c:  if(b->y + 6 >= p->y && b->alive == 1 && b->hit == 0
+throw.c:      && p->x + 15 >= b->x){
+throw.c:    p->y = b->y;
+throw.c:    double dx =  PIVOT_X - p->x;
+throw.c:    double dy = PIVOT_Y - p->y;
+throw.c:    b->speed = 1 * sqrt(fabs(p->speed) * fabs(p->power));
+throw.c:    p->speed = 0;
+throw.c:    p->score += fabs(b->speed) + 10;
+throw.c:    int returnval = fabs(p->power);
